@@ -32,11 +32,15 @@ http
     const { name, pass } = creds;
 
     if (name !== argv.username || pass !== argv.password) {
+      console.warn(
+        `Incorrect username and password from ${req.socket.remoteAddress}`
+      );
       return unauthorized(res);
     }
 
     proxy.web(req, res, null, error => {
       if (error) {
+        console.warn(`Upstream error: ${error.message}`);
         res.writeHead(502);
         res.end();
       }
