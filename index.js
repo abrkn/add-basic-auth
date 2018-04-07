@@ -7,13 +7,10 @@ const argv = require('yargs')
   .env('PROXY')
   .default('targetPort', 80)
   .default('listenPort', 80)
-  .demandOption([
-    'targetHost',
-    'targetPort',
-    'listenPort',
-    'username',
-    'password',
-  ]).argv;
+  .example(
+    'add-basic-auth --listenPort 3001 --username foo --password bar --target http://brekken.com'
+  )
+  .demandOption(['target', 'listenPort', 'username', 'password']).argv;
 
 const unauthorized = res => {
   res.writeHead(401, null, { 'WWW-Authenticate': 'Basic' });
@@ -21,10 +18,7 @@ const unauthorized = res => {
 };
 
 const proxy = new httpProxy.createProxyServer({
-  target: {
-    host: argv.targetHost,
-    port: argv.targetPort,
-  },
+  target: argv.target,
 });
 
 http
@@ -48,4 +42,8 @@ http
       }
     });
   })
-  .listen(argv.listenPort);
+  .listen(argv.listenPort, () => {
+    console.log(
+      `Proxying with basic auth from port ${argv.listenPort} to ${argv.target}`
+    );
+  });
