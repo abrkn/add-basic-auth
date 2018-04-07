@@ -1,11 +1,17 @@
 {
   "name": "add-basic-auth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Protect a resource with basic auth",
   "bin": {
     "add-basic-auth": "./index.js"
   },
-  "keywords": ["proxy", "http", "basic auth", "www-authenticate", "node.js"],
+  "keywords": [
+    "proxy",
+    "http",
+    "basic auth",
+    "www-authenticate",
+    "node.js"
+  ],
   "author": "Andreas Brekken <andreas@brekken.com>",
   "license": "MIT",
   "repository": {
