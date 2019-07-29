@@ -10,6 +10,7 @@ const argv = require('yargs')
   .example(
     'add-basic-auth --listenPort 3001 --username foo --password bar --target http://brekken.com'
   )
+  .boolean('insecure')
   .demandOption(['target', 'listenPort', 'username', 'password']).argv;
 
 const unauthorized = res => {
@@ -19,6 +20,7 @@ const unauthorized = res => {
 
 const proxy = new httpProxy.createProxyServer({
   target: argv.target,
+  secure: argv.insecure !== true,
 });
 
 http
