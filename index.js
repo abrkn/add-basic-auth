@@ -21,6 +21,7 @@ const unauthorized = (res) => {
 const proxy = new httpProxy.createProxyServer({
   target: argv.target,
   secure: argv.insecure !== true,
+  ws: true,
 });
 
 const proxyServer = http.createServer((req, res) => {
