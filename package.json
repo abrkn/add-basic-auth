@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/abrkn/add-basic-auth#readme",
   "dependencies": {
-    "basic-auth": "2.0.0",
-    "http-proxy": "1.16.2",
-    "yargs": "11.0.0"
+    "basic-auth": "~2.0.1",
+    "http-proxy": "~1.18.1",
+    "yargs": "~17.7.2"
   }
 }
