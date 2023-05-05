@@ -26,5 +26,8 @@
     "basic-auth": "~2.0.1",
     "http-proxy": "~1.18.1",
     "yargs": "~17.7.2"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }
