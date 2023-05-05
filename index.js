@@ -13,7 +13,7 @@ const argv = require('yargs')
   .boolean('insecure')
   .demandOption(['target', 'listenPort', 'username', 'password']).argv;
 
-const unauthorized = res => {
+const unauthorized = (res) => {
   res.writeHead(401, null, { 'WWW-Authenticate': 'Basic' });
   res.end();
 };
@@ -40,7 +40,7 @@ http
       return unauthorized(res);
     }
 
-    proxy.web(req, res, null, error => {
+    proxy.web(req, res, null, (error) => {
       if (error) {
         console.warn(`Upstream error: ${error.message}`);
         res.writeHead(502);
