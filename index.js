@@ -23,33 +23,37 @@ const proxy = new httpProxy.createProxyServer({
   secure: argv.insecure !== true,
 });
 
-http
-  .createServer((req, res) => {
-    const creds = auth(req);
+const proxyServer = http.createServer((req, res) => {
+  const creds = auth(req);
 
-    if (!creds) {
-      return unauthorized(res);
-    }
+  if (!creds) {
+    return unauthorized(res);
+  }
 
-    const { name, pass } = creds;
+  const { name, pass } = creds;
 
-    if (name !== argv.username || pass !== argv.password) {
-      console.warn(
-        `Incorrect username and password from ${req.socket.remoteAddress}`
-      );
-      return unauthorized(res);
-    }
-
-    proxy.web(req, res, null, (error) => {
-      if (error) {
-        console.warn(`Upstream error: ${error.message}`);
-        res.writeHead(502);
-        res.end();
-      }
-    });
-  })
-  .listen(argv.listenPort, () => {
-    console.log(
-      `Proxying with basic auth from port ${argv.listenPort} to ${argv.target}`
+  if (name !== argv.username || pass !== argv.password) {
+    console.warn(
+      `Incorrect username and password from ${req.socket.remoteAddress}`
     );
+    return unauthorized(res);
+  }
+
+  proxy.web(req, res, null, (error) => {
+    if (error) {
+      console.warn(`Upstream error: ${error.message}`);
+      res.writeHead(502);
+      res.end();
+    }
   });
+});
+
+proxyServer.on('upgrade', function (req, socket, head) {
+  proxy.ws(req, socket, head);
+});
+
+proxyServer.listen(argv.listenPort, () => {
+  console.log(
+    `Proxying with basic auth from port ${argv.listenPort} to ${argv.target}`
+  );
+});
