@@ -14,8 +14,8 @@ Options:
   --version     Show version number                                    [boolean]
   --target                                                            [required]
   --listenPort                                          [required] [default: 80]
-  --username                                                          [required]
-  --password                                                          [required]
+  --username                    [required] [default: process.env.PROXY_USERNAME]
+  --password                    [required] [default: process.env.PROXY_PASSWORD]
   --targetPort                                                     [default: 80]
 
 Examples:

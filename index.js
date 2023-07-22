@@ -7,6 +7,8 @@ const argv = require('yargs')
   .env('PROXY')
   .default('targetPort', 80)
   .default('listenPort', 80)
+  .default('username', process.env.PROXY_USERNAME)
+  .default('password', process.env.PROXY_PASSWORD)
   .example(
     'add-basic-auth --listenPort 3001 --username foo --password bar --target http://brekken.com'
   )
