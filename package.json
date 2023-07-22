@@ -1,6 +1,6 @@
 {
   "name": "add-basic-auth",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Protect a resource with basic auth",
   "bin": {
     "add-basic-auth": "./index.js"
